@@ -1,4 +1,5 @@
 require 'httparty'
+require './weather_report.rb'
 
 def enter_zip()
   puts 'Please enter a zip code: '
@@ -18,7 +19,9 @@ end
 def zip_lookup(zip)
   geolookup = HTTParty.get("http://api.wunderground.com/api/KEY_GOES_HERE/geolookup/q/#{zip}.json")
   city = geolookup["location"]["city"]
+  city.gsub!(" ","_")
   state = geolookup["location"]["state"]
+  WeatherReport.new(city, state)
 end
 
 puts 'Welcome to the Weather Report App!'
