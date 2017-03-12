@@ -1,15 +1,24 @@
+require 'httparty'
+
 class WeatherReport
-  attr_reader :state, :response
+  attr_reader :response
   def initialize(city, state)
     @city = city
     @state = state
-    @response = HTTParty.get("http://api.wunderground.com/api/KEY_GOES_HERE/conditions/q/#{state}/#{city}.json")
+    @response = HTTParty.get("http://api.wunderground.com/api/key/conditions/q/#{state}/#{city}.json")
     @current = @response["current_observation"]
-    puts @current
+  end
+
+  def city_state()
+    @current["display_location"]["full"]
   end
 
   def city()
-    @city.gsub!("_"," ")
+    @current["display_location"]["city"]
+  end
+
+  def state()
+    @current["display_location"]["state"]
   end
 
   def temp()
