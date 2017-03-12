@@ -1,5 +1,6 @@
 require 'httparty'
 require './weather_report.rb'
+require 'yaml'
 
 def enter_zip()
   puts 'Please enter a zip code: '
@@ -17,7 +18,9 @@ def validate_zip(zip)
 end
 
 def zip_lookup(zip)
-  geolookup = HTTParty.get("http://api.wunderground.com/api/key/geolookup/q/#{zip}.json")
+  file = YAML.load_file('./config.yaml')
+  key = file["development"]["key"]
+  geolookup = HTTParty.get("http://api.wunderground.com/api/#{key}/geolookup/q/#{zip}.json")
   city = geolookup["location"]["city"]
   city.gsub!(" ","_")
   state = geolookup["location"]["state"]

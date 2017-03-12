@@ -1,11 +1,14 @@
 require 'httparty'
+require 'yaml'
 
 class WeatherReport
   attr_reader :response
   def initialize(city, state)
+    file = YAML.load_file('./config.yaml')
+    key = file["development"]["key"]
     @city = city
     @state = state
-    @response = HTTParty.get("http://api.wunderground.com/api/key/conditions/q/#{state}/#{city}.json")
+    @response = HTTParty.get("http://api.wunderground.com/api/#{key}/conditions/q/#{state}/#{city}.json")
     @current = @response["current_observation"]
   end
 
