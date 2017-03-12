@@ -21,7 +21,15 @@ def zip_lookup(zip)
   city = geolookup["location"]["city"]
   city.gsub!(" ","_")
   state = geolookup["location"]["state"]
-  WeatherReport.new(city, state)
+  location = WeatherReport.new(city, state)
+  conditions(location)
+end
+
+def conditions(location)
+  puts "Current weather conditions for #{location.city}, #{location.state}: "
+  puts "It is #{location.weather} outside."
+  puts "The temperature is #{location.temp} and it feels like #{location.temp_feels_like}."
+  puts "Winds blowing at #{location.wind_speed} MPH from the #{location.wind_dir}."
 end
 
 puts 'Welcome to the Weather Report App!'
