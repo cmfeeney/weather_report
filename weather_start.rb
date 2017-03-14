@@ -24,7 +24,7 @@ def zip_lookup(zip)
   city = geolookup["location"]["city"]
   city.gsub!(" ","_")
   state = geolookup["location"]["state"]
-  location = WeatherReport.new(city, state)
+  location = WeatherReport.new(city, state, key)
   conditions(location)
 end
 
